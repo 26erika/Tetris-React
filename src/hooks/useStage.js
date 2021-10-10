@@ -3,6 +3,7 @@ import {createStage} from '../gameHelpers';
 
 export const useStage = (player, resetPlayer) => {
     const [stage, setStage] = useState(createStage());
+    const [rowsCleared, setRowsCleared] = useState(0);
 
     useEffect(()=> {
         setRowsCleared(0);
@@ -42,7 +43,11 @@ export const useStage = (player, resetPlayer) => {
             return newStage;
         };
         setStage(prev => updateStage(prev))
-    }, [player, resetPlayer]);
+    }, [player.collided,
+        player.pos.x,
+        player.pos.y,
+        player.tetromino,
+        resetPlayer]);
 
-    return [stage, setStage];
+    return [stage, setStage, rowsCleared];
 }

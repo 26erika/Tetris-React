@@ -12,10 +12,10 @@ export const usePlayer = () => {
 
     const rotate = (matrix, dir) => {
         // Make the rows to become cols (transpose)
-        const rotatedTetro = matrix.map((_, index) => matrix.map(col => col[index]),
-        );
+        const rotatedTetro = matrix.map((_, index) => matrix.map(col => col[index]));
         // Reverse each row to get a rotated matrix
-        if (dir > 0) return rotatedTetro.reverse();
+        if (dir > 0) return rotatedTetro.map(row => row.reverse());
+        return rotatedTetro.reverse();
     }
 
     const playerRotate = (stage, dir) => {

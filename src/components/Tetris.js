@@ -9,7 +9,7 @@ import {StyledTetrisWrapper, StyledTetris} from './styles/StyledTetris';
 import {usePlayer} from '../hooks/usePlayer';
 import {useStage} from '../hooks/useStage';
 import {useInterval} from '../hooks/useInterval';
-import { useGameStatus } from '../hooks/useGameStatus';
+import {useGameStatus} from '../hooks/useGameStatus';
 
 // Components
 import Stage from './Stage';
@@ -27,24 +27,13 @@ const [score, setScore, rows, setRows, level, setLevel] = useGameStatus(
     rowsCleared
 );
 
-    console.log('re-render');
-
     const movePlayer = dir => {
         if (!checkCollision(player, stage, {x: dir, y: 0})) {
             updatePlayerPos({ x: dir, y: 0});
         }
     };
 
-    const keyUp = ({keyCode}) => {
-        if (!gameOver) {
-            //Activate the interval again when user releases down arrow
-            if (keyCode === 40) {
-                setDropTime(1000 / (level + 1) + 200);
-            }
-        }
-    };
-
-    const startGame = ()=> {
+    const startGame = () => {
         // Reset everything
         setStage(createStage());
         setDropTime(1000);
@@ -65,7 +54,7 @@ const [score, setScore, rows, setRows, level, setLevel] = useGameStatus(
 
         if (!checkCollision(player, stage, {x: 0, y: 1})) {
             updatePlayerPos({ x: 0, y: 1, collided: false});
-        }else {
+        } else {
             // Game over
             if (player.pos.y < 1) {
                 console.log('Game over !!!');
@@ -73,6 +62,15 @@ const [score, setScore, rows, setRows, level, setLevel] = useGameStatus(
                 setDropTime(null);
             }
             updatePlayerPos({x: 0, y: 0, collided: true})
+        }
+    };
+
+    const keyUp = ({keyCode}) => {
+        if (!gameOver) {
+            //Activate the interval again when user releases down arrow
+            if (keyCode === 40) {
+                setDropTime(1000 / (level + 1) + 200);
+            }
         }
     };
 
@@ -87,11 +85,11 @@ const [score, setScore, rows, setRows, level, setLevel] = useGameStatus(
         if (!gameOver) {
             if (keyCode === 37) {
                 movePlayer(-1);
-            }else if(keyCode === 39) {
+            } else if(keyCode === 39) {
                 movePlayer(1);
-            }else if (keyCode === 40) {
+            } else if (keyCode === 40) {
                 dropPlayer();
-            }else if (keyCode === 38) {
+            } else if (keyCode === 38) {
                 playerRotate(stage, 1);
             }
         }

@@ -39,7 +39,7 @@ const [score, setScore, rows, setRows, level, setLevel] = useGameStatus(
         if (!gameOver) {
             //Activate the interval again when user releases down arrow
             if (keyCode === 40) {
-                setDropTime(1000 / (level + 1));
+                setDropTime(1000 / (level + 1) + 200);
             }
         }
     };
@@ -83,12 +83,6 @@ const [score, setScore, rows, setRows, level, setLevel] = useGameStatus(
         drop();
     };
 
-    // This one starts the game
-    // Custom hook by Dan Abramov
-    useInterval(() => {
-        drop();
-    }, dropTime);
-
     const move = ({keyCode}) => {
         if (!gameOver) {
             if (keyCode === 37) {
@@ -102,6 +96,12 @@ const [score, setScore, rows, setRows, level, setLevel] = useGameStatus(
             }
         }
     };
+
+    // This one starts the game
+    // Custom hook by Dan Abramov
+    useInterval(() => {
+        drop();
+    }, dropTime);
 
     return (
         <StyledTetrisWrapper 
@@ -117,9 +117,9 @@ const [score, setScore, rows, setRows, level, setLevel] = useGameStatus(
                     <Display gameOver={gameOver} text='Game Over' />
                 ) : (
                 <div>
-                    <Display text="Score" />
-                    <Display text="Rows" />
-                    <Display text="Level" />
+                    <Display text={`Score:${score}`} />
+                    <Display text={`Rows:${rows}`} />
+                    <Display text={`Level:${level}`} />
                 </div>
                 )}
                 <StartButton callback={startGame}/> 
